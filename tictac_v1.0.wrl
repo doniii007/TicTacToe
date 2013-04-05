@@ -1,0 +1,723 @@
+#VRML V2.0 utf8
+NavigationInfo{
+type["EXAMINE","ANY"]
+}			
+
+Viewpoint{
+	description	"Panoramic"
+	orientation	1 0 0  0.6
+	position 0 -6 8
+}	
+DEF background Background{
+ backUrl	 "Galaxy.jpg"
+frontUrl "Galaxy.jpg"
+leftUrl	"Galaxy.jpg"
+rightUrl "Galaxy.jpg"
+bottomUrl "Galaxy.jpg"
+topUrl  "Galaxy.jpg"
+}											
+    
+
+
+Sound {
+source AudioClip {
+        url "tetris.mid"
+        loop TRUE
+    }
+location 0 -6 8
+intensity 1
+priority 0
+spatialize TRUE
+maxBack 200
+maxFront 200
+}
+DEF	Ticker TimeSensor{
+cycleInterval .1
+loop TRUE
+}
+DEF BoardApp Appearance{
+texture	ImageTexture{
+url	"carbon.jpg"
+}
+material Material{
+specularColor .1 .1 .1
+}
+}
+PROTO frame[field SFVec3f trans 0 0 0 field SFRotation rot 0 0 1 0
+field SFNode appearance NULL
+]
+{
+Transform{
+translation	IS trans
+rotation IS	rot
+children[
+Shape{
+geometry Box{
+size .1 6 0.5
+}
+appearance IS	appearance
+}
+]
+}
+}
+PROTO gridunit[]{
+Shape{
+geometry IndexedFaceSet{
+coord Coordinate{
+point[-1 -1 .11,1 -1 .11,1 1 .11,-1 1 .11]
+}
+coordIndex[0,1,2,3]
+}
+appearance Appearance{
+	texture	 ImageTexture{
+		url	 "leather.jpg"
+	}
+	material Material{
+specularColor .1 .1 .1
+}
+
+
+}
+}
+}
+
+PROTO circle[exposedField SFVec3f trans 0 0 0 exposedField SFFloat transparency 0]{
+Transform{
+translation	IS trans
+children[
+Shape{
+appearance Appearance{
+material Material{
+diffuseColor 0 0 0
+specularColor .3 .3 .3
+ambientIntensity .1
+shininess .8
+transparency IS	transparency
+}
+}
+geometry Extrusion{
+spine[
+.7 0 0,.694 -.091 0,.676 -.182 0,.647 -.268 0,.606 -.349 0,.555 -.426 0,
+.495 -.495 0,.426 -.555 0,.349 -.606 0,.268 -.647 0,.182 -.676 0,
+.091 -.694 0,0 -.7 0,-.091 -.694 0,-.182 -.676 0,-.268 -.647 0,
+-.349 -.606 0,-.426 -.555 0,-.495 -.495 0,-.555 -.426 0,-.606 -.349 0,
+-.647 -.268 0,-.676 -.182 0,-.694 -.091 0,-.7 0 0,-.694 .091 0,
+-.676 .182 0,-.647 .268 0,-.606 .349 0,-.555 .426 0,-.495 .495 0,
+-.426 .555 0,-.349 .606 0,-.268 .647 0,-.182 .676 0,-.091 .694 0,
+0 .7 0,.091 .694 0,.182 .676 0,.268 .647 0,.349 .606 0,.426 .555 0,
+.495 .495 0,.555 .426 0,.606 .349 0,.647 .268 0,.676 .182 0,
+.694 .091 0,.7 0 0
+]
+crossSection[
+.12 0,.111 -.034,.085 -.064,.046 -.083,
+0 -.09,-.046 -.083,-.085 -.064,-.111 -.034,
+-.12 0,-.111 .034,-.085 .064,-.046 .083,
+0 .09,.046 .083,.085 .064,.111 .034,
+.12 0
+]
+beginCap FALSE
+endCap FALSE
+}
+}
+]
+}
+}
+PROTO cross[exposedField SFVec3f trans 0 0 0 exposedField SFFloat transparency 0]{
+Transform{
+translation	IS trans
+children[
+Shape{
+appearance Appearance{
+material Material{
+diffuseColor .9 .9 .9
+ambientIntensity 0
+shininess .275
+transparency IS	transparency
+}
+}
+geometry Extrusion{
+convex FALSE
+spine[
+0 .05 -.05,0 .05 .05
+]
+crossSection[
+0 .2,.6 .8,.8 .6,.2 0,.8 -.6,.6 -.8,0 -.2,-.6 -.8,
+-.8 -.6,-.2 0,-.8 .6,-.6 .8,0 .2
+]
+}
+}
+]
+}
+}
+Transform{
+children[
+Transform{
+rotation 1 0 0 .3
+translation	0 3.5 .4
+children[
+Transform{
+translation	-2 -.25 .25
+children[
+DEF Title Shape{
+geometry Text{
+string "TIC TAC TOE"
+fontStyle FontStyle{
+family "ARIAL"
+size .4
+}
+}
+appearance	Appearance{
+material Material{
+diffuseColor .9 .9 .9 
+}
+}
+}
+]
+}
+DEF ResetButton Transform{
+translation	1.6 0 .4
+children[
+DEF	TouchResetButton TouchSensor{}
+DEF ResetBox Shape{
+geometry Box{
+size 2 .8 .15
+}
+appearance Appearance{
+
+	texture	 ImageTexture{
+		url	 "marble.jpg"
+	}	 
+}
+}
+Transform{
+translation	-.9 -.1 .101
+children[
+Shape{
+geometry Text{
+string "  RESET"
+fontStyle FontStyle{
+size .4
+family "ARIAL"
+}
+}
+appearance Appearance{
+material Material{
+diffuseColor 0.9 .9 .9
+}
+}
+}
+]
+}
+]
+}
+
+#TITLES
+Shape{
+geometry Box{
+size 6 1 .45
+}
+appearance USE BoardApp
+}
+]
+}		
+
+#BackPanel  
+Shape{
+geometry Box{
+size 6 6 .2
+}
+appearance USE BoardApp
+}
+
+# Y-frames
+frame{
+trans 3 0 .2
+appearance USE BoardApp
+}
+frame{
+trans -3 0 .2
+appearance USE BoardApp
+}
+frame{
+trans 1 0 .2
+appearance USE BoardApp
+}
+frame{
+trans -1 0 .2
+appearance USE BoardApp
+}
+
+#X-Frames
+frame{
+rot 0 0 1 1.57
+trans 0 1 .2
+appearance USE BoardApp
+}
+frame{
+rot 0 0 1 1.57
+trans 0 -1 .2
+appearance USE BoardApp
+}
+frame{
+trans 0 3 .2
+rot 0 0 1 1.57
+appearance USE BoardApp
+}
+frame{
+trans 0 -3 .2
+rot 0 0 1 1.57
+appearance USE BoardApp
+}
+
+
+#Crosses/ Xs
+DEF x1 cross{
+trans -2 2 0
+}
+DEF x2 cross{
+trans 0 2 0
+}
+DEF x3 cross{
+trans 2 2 0
+}
+DEF x4 cross{
+trans -2 0 0
+}
+DEF x5 cross{
+}
+DEF x6 cross{
+trans 2 0 0
+}
+DEF x7 cross{
+trans -2 -2 0
+}
+DEF x8 cross{
+trans 0 -2 0
+}
+DEF x9 cross{
+trans 2 -2 0
+}
+
+# Circles/ Os
+DEF o1 circle {
+trans -2 2 0
+}
+DEF o2 circle {
+trans 0 2 0
+}
+DEF o3 circle{
+trans 2 2 0
+}
+DEF o4 circle{
+trans -2 0 0
+}
+DEF o5 circle{
+}
+DEF o6 circle{
+trans 2 0 0
+}
+DEF o7 circle{
+trans -2 -2 0
+}
+DEF o8 circle{
+trans 0 -2 0
+}
+DEF o9 circle{
+trans 2 -2 0
+}
+
+Transform{
+translation	-2 2 0
+children[
+DEF	Tch1 TouchSensor{}
+DEF	grid1 gridunit {}
+]
+}
+Transform{
+translation	0 2 0
+children[
+DEF	Tch2 TouchSensor{}
+DEF	grid2 gridunit{}
+]
+}
+Transform{
+translation	2 2 0
+children[
+DEF	Tch3 TouchSensor{}
+DEF	grid3 gridunit{}
+]
+}
+Transform{
+translation	-2 0 0
+children[
+DEF	Tch4 TouchSensor{}
+DEF	grid4 gridunit{}
+]
+}
+Transform{
+children[
+DEF	Tch5 TouchSensor{}
+DEF	grid5 gridunit{}
+]
+}
+Transform{
+translation	2 0 0
+children[
+DEF	Tch6 TouchSensor{}
+DEF	grid6 gridunit{}
+]
+}
+Transform{
+translation	-2 -2 0
+children[
+DEF	Tch7 TouchSensor{}
+DEF	grid7 gridunit{}
+]
+}
+Transform{
+translation	0 -2 0
+children[
+DEF	Tch8 TouchSensor{}
+DEF	grid8 gridunit{}
+]
+}
+Transform{
+translation	2 -2 0
+children[
+DEF	Tch9 TouchSensor{}
+DEF	grid9 gridunit{}
+]
+}
+]
+}
+DEF scr Script{
+eventIn	SFFloat	timer
+eventIn	SFTime	resetClick	   
+field MFNode x[USE x1,USE x1,USE x2,USE x3,USE x4,USE x5,USE x6,USE x7,USE x8,USE x9]
+field MFNode o[USE o1,USE o1,USE o2,USE o3,USE o4,USE o5,USE o6,USE o7,USE o8,USE o9]
+field MFNode tch[USE Tch1,USE Tch1,USE Tch2,USE Tch3,USE Tch4,USE Tch5,USE Tch6,USE Tch7,USE Tch8,USE Tch9]
+field MFNode face[USE grid1,USE grid1,USE grid2,USE grid3,USE grid4,USE grid5,USE grid6,USE grid7,USE grid8,USE grid9]
+field SFNode rsbutton USE ResetButton
+field SFNode ngbox USE	ResetBox
+field SFNode Title USE Title
+field SFNode TchRB USE TouchResetButton
+field SFFloat turn 1		# x==1, o==2, null=0
+field SFFloat firstturn 1
+field SFFloat count 0
+field SFFloat currentpush 0    # 0 means null, greater than 0 means x was pushed in position, less than 0 means o was pushed in position
+field SFBool gridempty FALSE	# true == reset
+field SFFloat raise 0
+field MFInt32 state[0,0,0,0,0,0,0,0,0,0]   #x==1, o==2, null=0		, state[0] states winner
+url	"javascript:
+
+function resetClick ()
+{
+	if (!gridempty){
+
+		currentpush=0;
+		gridempty=true;
+
+		if(state[0] == 1){
+			turn = 2;
+		}
+		else{
+			turn = 1;
+		}
+		//clear old input
+		for (i=0;i <=9 ;i++){
+			state[i]=0;
+		}				 
+	}	
+}
+function timer ()
+{	
+	
+	//button animation	
+		if (TchRB.isActive==TRUE){     
+			rsbutton.translation[2]=.2;
+		}
+		else{
+			rsbutton.translation[2]=.4;
+		}
+ 
+
+	if (!gridempty){
+					   
+		
+		//If X is pushed
+		if (currentpush ==0 && turn==1){
+			for (i=1;i <= 9;i++){
+				if (tch[i].isActive==true && state[i]==0){
+					currentpush =i;
+					turn=2;
+				}
+			}
+		}
+		// If O is pushed
+		if (currentpush ==0 && turn==2){
+			for (i=1;i <= 9;i++){
+				if (tch[i].isActive==TRUE && state[i]==0){
+					currentpush=i-10;
+					turn=1;
+				}
+			}
+
+		}
+
+	 	if (currentpush>0)
+			animateX();
+		if (currentpush<0)	
+			animateO();
+		
+
+
+	
+
+
+	}
+	if(gridempty)
+	resetgrid();
+						 
+	gridempty=false	
+
+						 
+	    if (turn==1) Title.geometry.string[0]='Player X turn';
+		if (turn==2) Title.geometry.string[0]='Player O turn';
+
+	count=0;
+	for (i=1;i < 10;i++){
+		if (state[i]!=0){
+			count += 1;
+		}
+	}
+
+
+			
+	checkwinner();
+	animatewinner();
+	
+}
+
+function animateO()
+		//Animate O
+		{
+			if (o[currentpush+10].trans[2]<.3){
+				o[currentpush+10].trans[2]=o[currentpush+10].trans[2]+.008;
+			}
+			else{
+				state[currentpush+10]=2;
+				currentpush=0;
+			}
+		}
+
+
+function animateX()
+		 //Animate X
+	{
+			if (x[currentpush].trans[2]<.3){	
+				x[currentpush].trans[2]=x[currentpush].trans[2]+.008;
+			}
+			else{
+				state[currentpush]=1;
+				currentpush=0;
+			}
+		} 
+	
+	function resetgrid()
+	{
+
+		for (i=1;i < 10;i++){
+
+				o[i].trans[2]=0;
+				o[i].transparency=0;
+				x[i].trans[2]=0;
+				x[i].transparency=0;
+		
+			}
+		
+		
+	
+		}
+function checkwinner()
+{
+	if (state[0]==1){
+		Title.geometry.string[0]='Player X wins!';
+		turn=0;
+	}
+	if (state[0]==2){
+		Title.geometry.string[0]='Player O wins!';
+		turn=0;
+	}
+	else	if (count==9){
+		Title.geometry.string[0]='Draw';
+		turn=0;
+	}
+
+}
+
+
+ function animatewinner()
+	 {
+
+	if (state[1]==1 && state[2]==1 && state[3]==1){
+			state[0]=1;
+		if (x[1].trans[2]< .9){
+			x[1].trans[2]=x[1].trans[2]+.01;
+			x[2].trans[2]=x[2].trans[2]+.01;
+			x[3].trans[2]=x[3].trans[2]+.01;
+		}
+	}
+
+	if (state[4]==1 && state[5]==1 && state[6]==1){
+		state[0]=1;
+		if (x[4].trans[2]< .9){
+			x[4].trans[2]=x[4].trans[2]+.01;
+			x[5].trans[2]=x[5].trans[2]+.01;
+			x[6].trans[2]=x[6].trans[2]+.01;
+		}
+	}
+
+	if (state[7]==1 && state[8]==1 && state[9]==1){
+		state[0]=1;
+		if (x[7].trans[2]<.9){
+			x[7].trans[2]=x[7].trans[2]+.01;
+			x[8].trans[2]=x[8].trans[2]+.01;
+			x[9].trans[2]=x[9].trans[2]+.01;
+		}
+	}
+																					  
+	if (state[3]==1 && state[5]==1 && state[7]==1){
+		state[0]=1;
+		if (x[3].trans[2]<=.8){
+			x[3].trans[2]=x[3].trans[2]+.02;
+			x[5].trans[2]=x[5].trans[2]+.02;
+			x[7].trans[2]=x[7].trans[2]+.02;
+		}
+	}
+
+	if (state[1]==1 && state[5]==1 && state[9]==1){
+		state[0]=1;
+		if (x[1].trans[2]<=.8){
+			x[1].trans[2]=x[1].trans[2]+.02;
+			x[5].trans[2]=x[5].trans[2]+.02;
+			x[9].trans[2]=x[9].trans[2]+.02;
+		}
+	}
+		  
+
+	if (state[1]==1 && state[4]==1 && state[7]==1){
+		state[0]=1;
+		if (x[1].trans[2]<=.8){
+			x[1].trans[2]=x[1].trans[2]+.02;
+			x[4].trans[2]=x[4].trans[2]+.02;
+			x[7].trans[2]=x[7].trans[2]+.02;
+		}
+	}
+
+	if (state[2]==1 && state[5]==1 && state[8]==1){
+		state[0]=1;
+		if (x[2].trans[2]<=.8){
+			x[2].trans[2]=x[2].trans[2]+.02;
+			x[5].trans[2]=x[5].trans[2]+.02;
+			x[8].trans[2]=x[8].trans[2]+.02;
+		}
+	}
+
+	if (state[3]==1 && state[6]==1 && state[9]==1){
+		state[0]=1;
+		if (x[3].trans[2]<=.8){
+			x[3].trans[2]=x[3].trans[2]+.02;
+			x[6].trans[2]=x[6].trans[2]+.02;
+			x[9].trans[2]=x[9].trans[2]+.02;
+		}
+	}
+
+	if (state[3]==2 && state[5]==2 && state[7]==2){
+		state[0]=2;
+		if (o[3].trans[2]<=.8){
+			o[3].trans[2]=o[3].trans[2]+.02;
+			o[5].trans[2]=o[5].trans[2]+.02;
+			o[7].trans[2]=o[7].trans[2]+.02;
+		}
+	}
+
+	if (state[1]==2 && state[5]==2 && state[9]==2){
+		state[0]=2;
+		if (o[1].trans[2]<=.8){
+			o[1].trans[2]=o[1].trans[2]+.02;
+			o[5].trans[2]=o[5].trans[2]+.02;
+			o[9].trans[2]=o[9].trans[2]+.02;
+		}
+	}
+
+	if (state[1]==2 && state[2]==2 && state[3]==2){
+		state[0]=2;
+		if (o[1].trans[2]<=.8){
+			o[1].trans[2]=o[1].trans[2]+.02;
+			o[2].trans[2]=o[2].trans[2]+.02;
+			o[3].trans[2]=o[3].trans[2]+.02;
+		}
+	}
+
+	if (state[4]==2 && state[5]==2 && state[6]==2){
+		state[0]=2;
+		if (o[4].trans[2]<=.8){
+			o[4].trans[2]=o[4].trans[2]+.02;
+			o[5].trans[2]=o[5].trans[2]+.02;
+			o[6].trans[2]=o[6].trans[2]+.02;
+		}
+	}
+
+	if (state[7]==2 && state[8]==2 && state[9]==2){
+		state[0]=2;
+		if (o[7].trans[2]<=.8){
+			o[7].trans[2]=o[7].trans[2]+.02;
+			o[8].trans[2]=o[8].trans[2]+.02;
+			o[9].trans[2]=o[9].trans[2]+.02;
+		}
+	}
+
+	if (state[1]==2 && state[4]==2 && state[7]==2){
+		state[0]=2;
+		if (o[1].trans[2]<=.8){
+			o[1].trans[2]=o[1].trans[2]+.02;
+			o[4].trans[2]=o[4].trans[2]+.02;
+			o[7].trans[2]=o[7].trans[2]+.02;
+		}
+	}
+
+	if (state[2]==2 && state[5]==2 && state[8]==2){
+		state[0]=2;
+		if (o[2].trans[2]<=.8){
+			o[2].trans[2]=o[2].trans[2]+.02;
+			o[5].trans[2]=o[5].trans[2]+.02;
+			o[8].trans[2]=o[8].trans[2]+.02;
+		}
+	}
+
+	if (state[3]==2 && state[6]==2 && state[9]==2){
+		state[0]=2;
+		if (o[3].trans[2]<=.8){
+			o[3].trans[2]=o[3].trans[2]+.02;
+			o[6].trans[2]=o[6].trans[2]+.02;
+			o[9].trans[2]=o[9].trans[2]+.02;
+		}
+	}
+
+
+
+
+	 }
+"
+
+
+
+
+
+
+
+
+
+}
+ROUTE Ticker.fraction_changed TO scr.timer
+ROUTE TouchResetButton.touchTime TO scr.resetClick
